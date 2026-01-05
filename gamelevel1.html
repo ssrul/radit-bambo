@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Level 1</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    height:100vh;
+    background:url('pict/level1.jpg') no-repeat center/cover;
+    font-family:'Baloo 2', cursive;
+    overflow:hidden;
+}
+
+.background-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(190,255,230,.35);
+    z-index:-1;
+}
+
+.game-wrapper{
+    width:90%;
+    max-width:1100px;
+    height:90vh;
+    margin:4vh auto;
+    background:rgba(255,255,255,.2);
+    backdrop-filter: blur(2px);
+    border-radius:28px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.top-bar{
+    width:100%;
+    position:relative;
+    text-align:center;
+}
+
+h1{
+    font-family:'Luckiest Guy', cursive;
+    font-size:34px;
+    color:#b9fcf1;
+    -webkit-text-stroke:2px black;
+}
+
+.timer-bubble{
+    position:absolute;
+    right:0;
+    top:0;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#fff;
+    border:5px solid #000;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.timer-bubble.danger{
+    background:#ff5252;
+    color:#fff;
+    animation:pulse .6s infinite alternate;
+}
+
+@keyframes pulse{
+    from{transform:scale(1)}
+    to{transform:scale(1.08)}
+}
+
+.score{font-size:14px}
+
+.story{
+    background:#fff;
+    padding:18px;
+    border-radius:18px;
+    font-size:18px;
+    max-width:750px;
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.content-row{
+    display:flex;
+    gap:40px;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.main-shape{width:240px}
+.main-shape img{
+    width:100%;
+    filter:drop-shadow(0 6px 6px rgba(0,0,0,.4));
+}
+
+.choices{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+    max-width:360px;
+}
+
+.choice{
+    background:#9eedff;
+    border:5px solid #000;
+    border-radius:22px;
+    padding:16px;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 4px 0 #000;
+}
+.choice:hover{transform:scale(1.08)}
+
+.essay-input{
+    grid-column:span 2;
+    padding:14px;
+    font-size:18px;
+    border-radius:14px;
+    border:3px solid #000;
+}
+
+.submit-btn{
+    grid-column:span 2;
+    padding:14px;
+    font-size:18px;
+    background:#9eedff;
+    border:4px solid #000;
+    border-radius:16px;
+    cursor:pointer;
+}
+
+.next-level{
+    grid-column:span 2;
+    padding:18px;
+    font-size:22px;
+    background:#a4eaff;
+    color:#fff;
+    border:4px solid #000;
+    border-radius:22px;
+    cursor:pointer;
+    box-shadow:0 4px 0 #000;
+}
+
+.feedback-card{
+    display:none;
+    background:#ffffffdd;
+    border-radius:18px;
+    padding:18px;
+    max-width:420px;
+    text-align:center;
+    margin-top:20px;
+}
+
+.benar{color:#2e7d32}
+.salah{color:#c62828}
+
+#nextBtn{
+    display:none;
+    margin-top:12px;
+    padding:12px 35px;
+    font-size:20px;
+    background:#9ee8ff;
+    border:4px solid #000;
+    border-radius:16px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="game-wrapper">
+
+<div class="top-bar">
+    <h1>Perhatikan Waktu dan Jawab Dengan Tepat!</h1>
+    <div class="timer-bubble" id="timer">
+        <div id="time">60</div>
+        <div class="score" id="score">Score: 0</div>
+    </div>
+</div>
+
+<div class="story" id="storyText"></div>
+
+<div class="content-row">
+    <div class="main-shape">
+        <img id="mainImage" src="pict/what.png">
+    </div>
+
+    <div class="choices" id="choices"></div>
+
+    <div class="feedback-card" id="feedbackCard">
+        <h3 id="feedbackTitle"></h3>
+        <p id="feedbackText"></p>
+        <button id="nextBtn">Next</button>
+    </div>
+</div>
+</div>
+
+<script>
+const CHAR_Q="pict/what.png", CHAR_Y="pict/yes.png", CHAR_N="pict/no.png";
+
+const questions =[
+{type:"mc",text:"Perhatikan empat bilangan berikut: <b>3.405, 3.450, 3.054, dan 3.540.</b> Agar mudah dibandingkan, maka urutkanlah bilangan tersebut dari nilai yang paling kecil sampai yang paling besar!",image:"q1.png",options:["3.054, 3.405, 3.450, 3.540","3.405, 3.054, 3.450, 3.540","3.054, 3.450, 3.405, 3.540","3.540, 3.450, 3.405, 3.054"],correct:0,explain:"Urutkan dari ribuan terkecil ke terbesar."},
+{type:"mc",text:"Seorang pedagang memiliki persediaan celengan bamboo sebanyak 6.248 buah. Setelah berjualan, sebanyak 3.759 buah celengan telah terjual. Berapakah banyak celengan bamboo yang masih tersisa?",image:"q2.png",options:["2.389","2.489","2.599","2.739"],correct:1,explain:"Sisa barang diperoleh dengan mengurangkan jumlah awal dengan yang terjual, yaitu 6.248 – 3.759 = 2.489"},
+{type:"mc",text:"Dua orang anak masing-masing mendapatkan bagian kue. Anak pertama memperoleh 3/4 bagian kue, sedangkan anak kedua memperoleh 2/3 bagian. Berapakah besar sisa bagian yang tersisa?",image:"q3.png",options:["2/3","3/4","1/2","3/8"],correct:1,explain:"Untuk membandingkan pecahan dengan penyebut berbeda, pecahan dapat diubah ke bentuk desimal."},
+{type:"mc",text:"Ibu memiliki 2/5 kilogram gula. Sebanyak 1/5 kilogram gula digunakan untuk memasak. Sisa gula ibu sekarang adalah",image:"q4.png",options:["1/10 kg","2/10 kg","5 kg","4/3 kg"],correct:2,explain:"Karena kedua pecahan memiliki penyebut yang sama, pengurangan dapat dilakukan langsung pada pembilangnya."},
+{type:"mc",text:"Perhatikan pola bilangan berikut: <b>2, 6, 18, 54, …, ….</b> Dua bilangan yang tepat untuk melanjutkan pola tersebut adalah...",image:"q5.png",options:["56 dan 108","81 dan 108","162 dan 486","108 dan 162"],correct:2,explain:"Setiap bilangan pada pola tersebut diperoleh dengan mengalikan bilangan sebelumnya dengan 3."},
+{type:"mc",text:"Terdapat sebuah pola bilangan yang menomori bola takraw, dimulai dari 100, 90, 80, 70, dan seterusnya. Bilangan yang menempati urutan ke-7 pada pola tersebut adalah...",image:"q6.png",options:["50","30","40","60"],correct:2,explain:"Pola bilangan ini berkurang 10 setiap langkahnya. Jika dihitung secara berurutan mulai dari 100 sebagai urutan pertama, maka bilangan pada urutan ke-7 adalah 40."},
+{type:"mc",text:"Sebuah figura bamboo berbentuk persegi panjang memiliki panjang 8 satuan dan lebar 5 satuan. Luas persegi panjang tersebut adalah",image:"q7.png",options:["25","40","30","55"],correct:1,explain:"Luas persegi panjang dihitung dengan mengalikan panjang dan lebar. Maka, luasnya adalah 8 × 5 = 40 satuan persegi."},
+{type:"essay",text:"Seorang toko souvenir dan membutuhkan persediaan bingkai cermin bamboo sebanyak 8.640 buah. Dalam kurun waktu 2 bulan, bingkai sudah terjual sebanyak 3.750 buah, maka penjual berinisatif menambah stok sejumlah 1.360. Berapakah total sisa bingkai yang ada?",image:"e1.png",answer:"6250",explain:"4890 + 1360 = 6250"},
+{type:"essay",text:"Terdapat kotak pensil bamboo yang tiap kotak isinya berjumlah 24 pensil. Sekolah membeli 7 kotak pensil, kemudian 35 pensil dibagikan kepada siswa. Sisa pensil yang masih ada adalah",image:"e2.png",answer:"133",explain:"Jumlah pensil mula-mula adalah 7 dikalikan 24, yaitu 168 pensil. Setelah 35 pensil dibagikan kepada siswa, sisa pensil yang masih ada adalah 168 dikurangi 35, yaitu 133 pensil."},
+{type:"essay",text:"Rata-rata ujian matematika dari 5 siswa yaitu bernilai 80. Empat siswa lain nilainya 70,75,80,85. Nilai siswa ke-5?",image:"e3.png",answer:"90",explain:"Kalikan terlebih dahulu jumlah siswa dengan rerata nilai yaitu 5x80 = 400. kemudian kurangkan dengan jumlah nilai siswa lainnya yaitu 310. Maka 400-310 = 90"}
+];
+
+let index=0, score=0, timeLeft=80, timerInterval;
+
+const storyText=document.getElementById("storyText");
+const mainImage=document.getElementById("mainImage");
+const choices=document.getElementById("choices");
+const feedbackCard=document.getElementById("feedbackCard");
+const feedbackTitle=document.getElementById("feedbackTitle");
+const feedbackText=document.getElementById("feedbackText");
+const nextBtn=document.getElementById("nextBtn");
+const timeDisplay=document.getElementById("time");
+const scoreDisplay=document.getElementById("score");
+const timer=document.getElementById("timer");
+
+function startTimer(){
+clearInterval(timerInterval);
+timeLeft=80;
+timeDisplay.textContent=timeLeft;
+timer.classList.remove("danger");
+timerInterval=setInterval(()=>{
+timeLeft--;
+timeDisplay.textContent=timeLeft;
+if(timeLeft<=10) timer.classList.add("danger");
+if(timeLeft<=0) autoWrong();
+},1000);
+}
+
+function loadQuestion(){
+const q=questions[index];
+mainImage.src=CHAR_Q;
+storyText.innerHTML=q.text;
+choices.innerHTML="";
+feedbackCard.style.display="none";
+nextBtn.style.display="none";
+startTimer();
+
+if(q.type==="mc"){
+q.options.forEach((o,i)=>{
+const d=document.createElement("div");
+d.className="choice";
+d.textContent=o;
+d.onclick=()=>checkMC(i);
+choices.appendChild(d);
+});
+}else{
+const inp=document.createElement("input");
+inp.className="essay-input";
+inp.placeholder="Jawaban kamu...";
+const btn=document.createElement("button");
+btn.className="submit-btn";
+btn.textContent="Kirim Jawaban";
+btn.onclick=()=>checkEssay(inp.value.trim());
+choices.append(inp,btn);
+}
+}
+
+function checkMC(i){
+clearInterval(timerInterval);
+const q=questions[index];
+feedbackCard.style.display="block";
+nextBtn.style.display="inline-block";
+if(i===q.correct){
+score+=10;
+mainImage.src=CHAR_Y;
+feedbackTitle.textContent="Benar ✅";
+feedbackTitle.className="benar";
+}else{
+mainImage.src=CHAR_N;
+feedbackTitle.textContent="Salah ❌";
+feedbackTitle.className="salah";
+}
+scoreDisplay.textContent="Score: "+score;
+feedbackText.textContent=q.explain;
+}
+
+function checkEssay(val){
+const q=questions[index];
+if(val===q.answer){
+clearInterval(timerInterval);
+score+=10;
+mainImage.src=CHAR_Y;
+scoreDisplay.textContent="Score: "+score;
+feedbackCard.style.display="block";
+feedbackTitle.textContent="Benar ✅";
+feedbackTitle.className="benar";
+feedbackText.textContent=q.explain;
+nextBtn.style.display="inline-block";
+}else{
+mainImage.src=CHAR_N;
+alert("Jawaban salah, coba lagi ya 😊");
+}
+}
+
+function autoWrong(){
+clearInterval(timerInterval);
+mainImage.src=CHAR_N;
+feedbackCard.style.display="block";
+feedbackTitle.textContent="Waktu Habis ⏱️";
+feedbackTitle.className="salah";
+feedbackText.textContent="Coba lebih cepat ya!";
+choices.innerHTML="";
+}
+
+nextBtn.onclick=()=>{
+index++;
+if(index<questions.length) loadQuestion();
+else finish();
+};
+
+function finish(){
+mainImage.src=CHAR_Y;
+storyText.innerHTML=`🎉 LEVEL SELESAI!<br>Score Akhir: ${score}`;
+timer.innerHTML="✔";
+feedbackCard.style.display="none";
+
+choices.innerHTML=`
+<button class="next-level" onclick="location.href='gamelevel2.html'">
+▶ LANJUT LEVEL 2
+</button>`;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

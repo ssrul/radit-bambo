@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Materi Pembelajaran</title>
+    <style>
+        body {
+            height:100vh;
+            background:url('pict/materi.png') no-repeat center center;
+            background-size:cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; 
+            font-family:'Baloo 2', cursive;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow:
+        -2px -2px 0 #000000,
+         2px -2px 0 #000000,
+        -2px  2px 0 #000000,
+         2px  2px 0 #000000;
+        }
+
+        .materi-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto; /* center */
+        }
+
+        .materi-card {
+            background: #e4fffeaf;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+
+        .materi-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .materi-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+
+        .materi-desc {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .btn-youtube {
+            background: #ff3b3b;
+            color: white;
+        }
+
+        .btn-youtube:hover {
+            background: #d63030;
+        }
+
+        .btn-soal {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn-soal:hover {
+            background: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📘 Simak Materi Berikut Dengan Cermat! 📘</h1>
+
+    <div class="materi-container">
+
+        <!-- Materi 1 -->
+        <div class="materi-card">
+            <div>
+                <div class="materi-title">Materi 1: Bilangan Cacah Sampai 1000</div>
+                <div class="materi-desc">
+                   Bilangan cacah sampai 10.000 adalah himpunan semua bilangan bulat non-negatif mulai dari 0 hingga 10.000. Bilangan ini mencakup nilai tempat satuan, puluhan, ratusan, ribuan, hingga puluhan ribu (khusus untuk 10.000). Ini digunakan untuk belajar membaca, menulis, membandingkan, dan mengurutkan angka-angka besar, seperti 3.720 (tiga ribu tujuh ratus dua puluh) atau 10.000 (sepuluh ribu). 
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-youtube" onclick="openYoutube('https://youtu.be/KR_b09Dp9BE?si=G030t0-CJY1hhGo6')">Tonton Videonya!</button>
+                <button class="btn btn-soal" onclick="openSoal('materibilangan.html')">Ringkasan Materi</button>
+            </div>
+        </div>
+
+        <!-- Materi 2 -->
+        <div class="materi-card">
+            <div>
+                <div class="materi-title">Materi 2: Pecahan</div>
+                <div class="materi-desc">
+                    Bilangan pecahan adalah bilangan yang dinyatakan dalam bentuk perbandingan antara dua bilangan bulat, yakni pembilang dan penyebut. yang umumnya ditulis dalam bentuk a/b, di mana a adalah pembilang (bagian yang diambil) dan b adalah penyebut (jumlah total bagian), dengan syarat b ≠ 0. Terdapat beberapa jenis pecahan, yaitu Pecahan Biasa, Pecahan Campuran, Pecahan Desimal, Pecahan Sejenis, Pecahan Tak Sejenis, dan Pecahan Senilai.
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-youtube" onclick="openYoutube('https://youtu.be/CuZkrtdplNg?feature=shared')">Tonton Videonya!</button>
+                <button class="btn btn-soal" onclick="openSoal('materipecahan.html')">Ringkasan Materi</button>
+            </div>
+        </div>
+
+        <!-- Materi 3 -->
+        <div class="materi-card">
+            <div>
+                <div class="materi-title">Materi 3: Pola Gambar dan Bilangan</div>
+                <div class="materi-desc">
+                    Pola Gambar dan Bilangan adalah konsep dasar matematika tentang susunan teratur yang berulang, di mana pola gambar menggunakan bentuk visual (lingkaran, segitiga) dan pola bilangan menggunakan angka dengan aturan tertentu (tambah, kurang, kali, bagi) untuk memprediksi elemen selanjutnya.
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-youtube" onclick="openYoutube('https://youtu.be/Qfr-zb_7UEg?feature=shared')">Tonton Videonya!</button>
+                <button class="btn btn-soal" onclick="openSoal('materipola.html')">Ringkasan Materi</button>
+            </div>
+        </div>
+
+        <!-- Materi 4 -->
+        <div class="materi-card">
+            <div>
+                <div class="materi-title">Materi 4: Bangun Datar dan Ruang</div>
+                <div class="materi-desc">
+                    Bangun datar adalah bentuk geometris dua dimensi yang hanya memiliki panjang dan lebar, dibatasi oleh garis lurus atau lengkung, serta memiliki luas dan keliling, tidak punya tinggi atau volume, contohnya persegi, segitiga, lingkaran, persegi panjang, jajar genjang, dan trapesium, yang penting dalam matematika dan kehidupan sehari-hari.
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-youtube" onclick="openYoutube('https://youtu.be/zEs4Es7h15c?si=xtuSZ5nsmkRUW-o7')">Tonton Videonya!</button>
+                <button class="btn btn-soal" onclick="openSoal('materibangun.html')">Ringkasan Materi</button>
+            </div>
+        </div>
+
+         <!-- Materi 5 -->
+        <div class="materi-card">
+            <div>
+                <div class="materi-title">Materi 5: Piktogram dan Diagram Batang</div>
+                <div class="materi-desc">
+                    Piktogram dan diagram batang adalah metode visualisasi data untuk membandingkan kategori, namun piktogram menggunakan gambar atau simbol yang mewakili jumlah data (cocok untuk data sederhana), sementara diagram batang menggunakan batang persegi panjang yang panjangnya bervariasi sesuai nilai (lebih presisi untuk perbandingan detail). 
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-youtube" onclick="openYoutube('https://youtu.be/dmaiuNujMRw?feature=shared')">Tonton Videonya!</button>
+                <button class="btn btn-soal" onclick="openSoal('materipikto.html')">Ringkasan Materi</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openYoutube(url) {
+    window.location.href = url;
+        }
+
+
+        function openSoal(page) {
+            window.location.href = page;
+        }
+    </script>
+
+</body>
+</html>

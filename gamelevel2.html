@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Level 2</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    height:100vh;
+    background:url('pict/level2.jpg') center/cover no-repeat fixed;
+    font-family:'Baloo 2', cursive;
+    overflow:hidden;
+}
+
+.background-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(180,255,230,0.35);
+    z-index:-1;
+}
+
+.game-wrapper{
+    width:90%;
+    max-width:1100px;
+    height:90vh;
+    margin:4vh auto;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter: blur(2px);
+    border-radius:28px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.top-bar{
+    width:100%;
+    position:relative;
+    text-align:center;
+}
+
+h1{
+    font-family:'Luckiest Guy', cursive;
+    font-size:34px;
+    color:#b9fcf1;
+    -webkit-text-stroke:2px black;
+}
+
+.timer-bubble{
+    position:absolute;
+    right:0;
+    top:0;
+    width:95px;
+    height:95px;
+    border-radius:50%;
+    background:#fff;
+    border:5px solid #000;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.timer-bubble.danger{
+    background:#ff5252;
+    color:#fff;
+}
+
+.score{font-size:13px}
+
+.story{
+    background:#fff;
+    padding:18px;
+    border-radius:16px;
+    font-size:18px;
+    max-width:760px;
+    text-align:center;
+    margin:18px 0;
+}
+
+.content-row{
+    display:flex;
+    gap:60px;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+/* KARAKTER */
+.main-shape{
+    width:230px;
+    text-align:center;
+}
+.main-shape img{
+    width:100%;
+    filter:drop-shadow(0 6px 6px rgba(0,0,0,.4));
+}
+
+/* PILIHAN GANDA */
+.choices{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    max-width:420px;
+}
+
+.choice{
+    background:#9effb6;
+    border:4px solid #000;
+    border-radius:20px;
+    padding:14px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+    box-shadow:0 4px 0 #000;
+}
+.choice:hover{transform:scale(1.05)}
+
+/* TOMBOL NEXT LEVEL (PAKAI GRID YANG SAMA) */
+.next-level-btn{
+    grid-column:span 2;
+    padding:20px;
+    font-size:24px;
+    background:#4ade80;
+    border:4px solid #000;
+    border-radius:20px;
+    cursor:pointer;
+    box-shadow:0 4px 0 #000;
+}
+
+/* ESAI */
+.essay-box{
+    display:none;
+    flex-direction:column;
+    gap:14px;
+    max-width:420px;
+}
+.essay-box input{
+    padding:12px;
+    font-size:16px;
+    border-radius:12px;
+    border:3px solid #000;
+}
+.essay-box button{
+    padding:12px;
+    font-size:18px;
+    border-radius:14px;
+    border:3px solid #000;
+    background:#9effb6;
+    cursor:pointer;
+}
+
+/* FEEDBACK */
+.feedback-card{
+    display:none;
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    max-width:420px;
+    text-align:center;
+    margin-top:18px;
+}
+.benar{color:#2e7d32}
+.salah{color:#c62828}
+
+#nextBtn{
+    display:none;
+    margin-top:12px;
+    padding:12px 35px;
+    font-size:20px;
+    background:#9effb6;
+    border:4px solid #000;
+    border-radius:16px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+<div class="background-overlay"></div>
+
+<div class="game-wrapper">
+
+    <div class="top-bar">
+        <h1>Perhatikan Waktu dan Jawab Dengan Tepat!</h1>
+        <div class="timer-bubble" id="timer">
+            <div id="time">120</div>
+            <div class="score" id="score">Score: 0</div>
+        </div>
+    </div>
+
+    <div class="story" id="storyText"></div>
+
+    <div class="content-row">
+
+        <div class="main-shape">
+            <img id="mainImage" src="pict/what.png">
+        </div>
+
+        <div class="choices" id="choices"></div>
+
+        <div class="essay-box" id="essayBox">
+            <input type="text" id="essayInput" placeholder="Ketik jawabanmu">
+            <button onclick="submitEssay()">Kirim Jawaban</button>
+        </div>
+
+        <div class="feedback-card" id="feedbackCard">
+            <h3 id="feedbackTitle"></h3>
+            <p id="feedbackText"></p>
+            <button id="nextBtn">Next</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const CHAR_DEFAULT="pict/what.png";
+const CHAR_YES="pict/yes.png";
+const CHAR_NO="pict/no.png";
+const QUESTIONS_TIME=120;
+
+const questions = [
+{type:"mc",text:"Selisih antara bilangan terbesar dan terkecil dari 4.275, 4.752, 4.527, 4.725 adalah …",
+ options:["377","427","477","525"],correct:2,explain:"Bilangan terbesar adalah 4.752 dan terkecil adalah 4.275. Selisihnya diperoleh dengan mengurangkan 4.752 – 4.275 = 477. Jadi selisih antara bilangan terbesar dan terkecil adalah 477."},
+{type:"mc",text:"Hasil dari (8.640 – 2.875) + 1.360 adalah …",
+ options:["6.125","6.765","7.025","7.125"],correct:3,explain:"Pertama kurangkan 8.640 – 2.875 = 5.765. Kemudian tambahkan 1.360 sehingga 5.765 + 1.360 = 7.125. Jadi hasil akhirnya adalah 7.125."},
+{type:"mc",text:"Urutan pecahan terkecil ke terbesar <b>(3/8, 1/2, 5/8)</b> adalah...",
+ options:["1/2–3/8–5/8","3/8–1/2–5/8","5/8–1/2–3/8","1/2–5/8–3/8"],correct:1,explain:"Ubah pecahan ke desimal untuk memudahkan."},
+{type:"mc",text:"Ibu memiliki sebuah sirup berisi 3/4, kemudian ibu akan menggunakan sebanyak 2/8 liter. Maka sisa sirup ibu adalah…",
+ options:["1/4","1/2","3/8","5/8"],correct:1,explain:"2/8 liter sama dengan 1/4 liter. Sisa sirup = 3/4 – 1/4 = 2/4 = 1/2 liter. Jadi ibu masih memiliki 1/2 liter sirup."},
+{type:"mc",text:"Perhatikan pola bilangan berikut: <b>2, 6, 12, 20,….</b> Maka bilangan berikutnya adalah…",
+ options:["24","26","28","30"],correct:3,explain:"Pola bilangan bertambah dengan langkah bertingkat: +4, +6, +8, … sehingga angka berikutnya bertambah +10 dari 20. Jadi bilangan berikutnya adalah 30."},
+{type:"mc",text:"Pola bilangan dimulai dari 500, berkurang 25 setiap langkah. Maka berapakah bilangan ke-6?",
+ options:["350","375","400","425"],correct:1,explain:"500 → 475 → 450 → 425 → 400 → 375. Jadi bilangan ke-6 adalah 375."},
+{type:"essay",text:"Sebuah persegi panjang panjangnya 12 cm dan lebarnya 9 cm. Jika setengah dari luasnya diarsir, luas daerah yang diarsir adalah .... cm",answer:"54 cm", explain:"Luas persegi panjang = panjang × lebar = 12 × 9 = 108 cm². Setengahnya diarsir → 108 ÷ 2 = 54 cm²."},
+{type:"essay",text:"Bangun datar memiliki 4 sisi sama panjang dan 4 sudut siku-siku. Jika panjang sisi 7 cm, maka kelilingnya adalah .... cm",answer:"28 cm"},
+{type:"essay",text:"Jumlah buku yang dibaca siswa berurutan mulai dari 15, 18, 22, 25 buku. Maka rata-rata per minggu buku yang dibaca adalah ... buku",answer:"20 buku"},
+{type:"essay",text:"Toko memiliki 960 permen. Dimasukkan ke 8 kotak sama banyak, kemudian tiap kotak dibagikan ke 6 anak. Permen yang diterima setiap anak adalah ... permen",answer:"20 permen"}
+];
+
+let index=0,score=0,timeLeft=QUESTIONS_TIME,timerInterval;
+
+const storyText=document.getElementById("storyText");
+const mainImage=document.getElementById("mainImage");
+const choices=document.getElementById("choices");
+const essayBox=document.getElementById("essayBox");
+const essayInput=document.getElementById("essayInput");
+const feedbackCard=document.getElementById("feedbackCard");
+const feedbackTitle=document.getElementById("feedbackTitle");
+const feedbackText=document.getElementById("feedbackText");
+const nextBtn=document.getElementById("nextBtn");
+const timeDisplay=document.getElementById("time");
+const scoreDisplay=document.getElementById("score");
+const timer=document.getElementById("timer");
+
+function startTimer(){
+ clearInterval(timerInterval);
+ timeLeft=QUESTIONS_TIME;
+ timeDisplay.textContent=timeLeft;
+ timer.classList.remove("danger");
+ timerInterval=setInterval(()=>{
+  timeLeft--;
+  timeDisplay.textContent=timeLeft;
+  if(timeLeft<=15) timer.classList.add("danger");
+  if(timeLeft<=0){clearInterval(timerInterval);gameOver("Waktu habis!")}
+ },1000);
+}
+
+function loadQuestion(){
+ const q=questions[index];
+ storyText.innerHTML=q.text;
+ mainImage.src=CHAR_DEFAULT;
+ choices.innerHTML="";
+ essayBox.style.display="none";
+ feedbackCard.style.display="none";
+ nextBtn.style.display="none";
+ startTimer();
+ if(q.type==="mc"){
+  q.options.forEach((o,i)=>{
+   const d=document.createElement("div");
+   d.className="choice";
+   d.textContent=o;
+   d.onclick=()=>checkMC(i);
+   choices.appendChild(d);
+  });
+ }else{
+  essayBox.style.display="flex";
+  essayInput.value="";
+ }
+}
+
+function checkMC(i){
+ clearInterval(timerInterval);
+ const q=questions[index];
+ feedbackCard.style.display="block";
+ nextBtn.style.display="inline-block";
+ if(i===q.correct){
+  score+=10; mainImage.src=CHAR_YES;
+  feedbackTitle.textContent="Benar ✅"; feedbackTitle.className="benar";
+ }else{
+  score-=5; mainImage.src=CHAR_NO;
+  feedbackTitle.textContent="Salah ❌"; feedbackTitle.className="salah";
+ }
+ scoreDisplay.textContent="Score: "+score;
+ feedbackText.textContent=q.explain;
+}
+
+function submitEssay(){
+ clearInterval(timerInterval);
+ const q=questions[index];
+ if(essayInput.value.trim()===q.answer){
+  score+=10; mainImage.src=CHAR_YES; nextQuestion();
+ }else{
+  mainImage.src=CHAR_NO; gameOver("Jawaban salah!");
+ }
+}
+
+function nextQuestion(){
+ index++;
+ if(index<questions.length){
+  loadQuestion();
+ }else{
+  // AKHIR GAME — GANTI PILIHAN GANDA DENGAN TOMBOL
+  storyText.innerHTML=`🎉 Level 2 Selesai!<br>Score Akhir: ${score}`;
+  timer.innerHTML="✔";
+  choices.innerHTML="";
+  const btn=document.createElement("button");
+  btn.className="next-level-btn";
+  btn.textContent="▶ NEXT LEVEL";
+  btn.onclick=()=>location.href="gamelevel3.html";
+  choices.appendChild(btn);
+ }
+}
+
+function gameOver(msg){
+ storyText.innerHTML=`❌ GAME OVER<br>${msg}<br>Score: ${score}`;
+ choices.innerHTML="";
+ const btn=document.createElement("button");
+ btn.className="next-level-btn";
+ btn.textContent="▶ COBA LAGI";
+ btn.onclick=()=>location.reload();
+ choices.appendChild(btn);
+ timer.innerHTML="✖";
+}
+
+nextBtn.onclick=nextQuestion;
+loadQuestion();
+</script>
+</body>
+</html>

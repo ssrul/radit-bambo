@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Materi Bangun Ruang - Bamboo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    background:url('pict/materi.png') no-repeat center center;
+    background-size:cover;
+    font-family:'Baloo 2', cursive;
+    overflow:hidden;
+}
+
+/* WRAPPER */
+.materi-wrapper{
+    width:90%;
+    max-width:1100px;
+    height:88vh;
+    margin:4vh auto;
+    background:rgba(255, 255, 255, 0.354);
+    border-radius:28px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* JUDUL */
+.materi-header{
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:30px; /* kasih jarak ke bawah */
+    color:#ffffff;
+    text-shadow:
+        -2px -2px 0 #000000,
+         2px -2px 0 #000000,
+        -2px  2px 0 #000000,
+         2px  2px 0 #000000;
+}
+
+/* CONTENT (TIDAK DIUBAH STRUKTURNYA) */
+.materi-content{
+    flex:1;
+    display:flex;
+    gap:50px;
+    align-items:flex-start;
+    margin-top:30px; /* 🔥 turun ke tengah */
+}
+
+/* TEXT (SCROLL AKTIF LAGI) */
+.materi-text{
+    flex:1;
+    background:#6afb82c8;
+    padding:28px;
+    border-radius:22px;
+    max-height:320px;     /* 🔥 SCROLL SEPERTI GAMBAR KE-2 */
+    overflow-y:auto;
+}
+
+/* IMAGE */
+.materi-image{
+    flex:0.9;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:80px; 
+}
+
+.materi-image img{
+    position:absolute;
+    margin-top:80px; 
+    width:260px;
+    opacity:0;
+    transition:opacity 2s ease;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .materi-content{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .materi-image{
+        height:260px;
+    }
+
+    .materi-text{
+        max-height:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="materi-wrapper">
+
+    <!-- JUDUL -->
+    <div class="materi-header">
+        Simaklah dengan baik
+    </div>
+
+    <!-- CONTENT -->
+    <div class="materi-content">
+
+        <!-- TEXT (TIDAK LOOPING) -->
+        <div class="materi-text">
+            <h1>Pengertian</h1>
+            <p>
+                Bilangan cacah adalah bilangan bulat yang dimulai dari nol dan terus bertambah satu per satu, tanpa ada bilangan negatif dan tanpa pecahan. Contoh bilangan cacah adalah 0, 1, 2, 3, 4, 5, dan seterusnya. Bilangan cacah digunakan dalam kehidupan sehari-hari, misalnya untuk menghitung jumlah benda, jumlah uang, jumlah siswa, jumlah buku, dan sebagainya.
+                <br><br>
+            <h1>Nilai Tempat Pada Bilangan Cacah 1-10000</h1>
+                Setiap angka dalam suatu bilangan memiliki nilai tempat, tergantung posisinya. Nilai tempat inilah yang menentukan berapa besar nilai angka tersebut. Urutan nilai tempat pada bilangan cacah sampai 10.000 adalah :
+                <ul>
+                    <li>Satuan</li>
+                    <li>Puluhan</li>
+                    <li>Ratusan</li>
+                    <li>Ribuan</li>
+                    <li>Puluhan Ribu</li>
+                </ul>
+                <br>
+                <b>Contoh penjelasan: </b>
+                    Ambil bilangan 6.348. Bilangan ini tidak dibaca langsung, tapi diuraikan dulu agar mudah dipahami.
+                    <br>
+                    Angka 6 berada di tempat ribuan, artinya nilainya 6.000.
+                    <br>
+                    Angka 3 berada di tempat ratusan, artinya nilainya 300.
+                    <br>
+                    Angka 4 berada di tempat puluhan, artinya nilainya 40.
+                    <br>
+                    Angka 8 berada di tempat satuan, artinya nilainya 8.
+                    <br><b>Jadi: 6.348 = 6.000 + 300 + 40 + 8</b>
+                <br><br>
+
+            <h1>Membandingkan Bilangan Cacah</h1>
+            Membandingkan bilangan berarti menentukan bilangan mana yang lebih besar, lebih kecil, atau sama.
+            <br> Tanda yang digunakan:
+            <br> “>” artinya lebih dari
+            <br> “<” artinya kurang dari
+            <br>“=” artinya sama dengan
+            <br>Cara membandingkan bilangan cacah yaitu bandingkan angka paling kiri (ribuan terlebih dahulu). Jika ribuannya sama, bandingkan ratusannya. Jika ratusannya sama, bandingkan puluhannya. Jika masih sama, bandingkan satuannya.
+            <br><br>
+            
+            <h1>Contoh Soal</h1>
+            Di sebuah perpustakaan terdapat 2.375 buku cerita. Kemudian datang sumbangan sebanyak 1.425 buku. Berapa jumlah seluruh buku di perpustakaan sekarang?
+            <br> Pembahasan: Soal ini adalah penjumlahan bilangan cacah. Maka jumlahkan 2.375+1.425 = 3.800
+            <br><b>Penjelasan:</b>
+            <br>Satuan: 5 + 5 = 10 → tulis 0, simpan 1
+            <br>Puluhan: 7 + 2 + 1 = 10 → tulis 0, simpan 1
+            <br>Ratusan: 3 + 4 + 1 = 8
+            <br>Ribuan: 2 + 1 = 3
+            
+            <br>Jawaban: Jumlah seluruh buku di perpustakaan adalah 3.800 buku.
+            </p>
+        </div>
+
+        <!-- IMAGE (LOOPING SAJA) -->
+        <div class="materi-image" id="imageBox"></div>
+
+    </div>
+
+</div>
+
+<script>
+/* 🔥 GAMBAR SAJA YANG LOOPING */
+const images = [
+    "pict/gbilangan.png",
+    "pict/gbilang0.png",
+    "pict/gbilang1.png",
+    "pict/gbilang2.png",
+    "pict/gbilang3.png",
+    "pict/gbilang4.png",
+    "pict/gbilang5.png",
+    "pict/gbilang6.png",
+    "pict/gbilang7.png",
+    "pict/gbilang8.png",
+    "pict/gbilang9.png",
+];
+
+const imageBox = document.getElementById("imageBox");
+let imgIndex = 0;
+
+/* BUAT IMG ELEMENT */
+images.forEach((src, i)=>{
+    const img = document.createElement("img");
+    img.src = src;
+    if(i === 0) img.style.opacity = 1;
+    imageBox.appendChild(img);
+});
+
+const imgEls = imageBox.querySelectorAll("img");
+
+/* LOOPING GAMBAR */
+setInterval(()=>{
+    imgEls[imgIndex].style.opacity = 0;
+    imgIndex = (imgIndex + 1) % imgEls.length;
+    imgEls[imgIndex].style.opacity = 1;
+}, 4000); /* bebas, 4 detik smooth */
+</script>
+
+</body>
+</html>

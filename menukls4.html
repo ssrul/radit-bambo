@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Bamboo Ruang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* RESET DASAR */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('pict/menut2.png');
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            background-position: center;
+            background-color: #cfe8b0;
+
+            height: 100vh;
+            font-family:'Baloo 2', cursive;
+            overflow: hidden;
+        }
+
+        /* LANDING PAGE */
+        #landing-page {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* WRAPPER KONTEN */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            /* offset ke kanan */
+            transform: translateX(300px);
+            gap: 14px;
+        }
+
+        /* GAMBAR HERO */
+        .hero-image {
+            max-width: 570px;
+            width: 100%;
+        }
+
+        /* MENU */
+        #menu-container {
+            display: flex;
+            flex-direction: row; /* horizontal */
+            gap: 20px;
+        }
+
+        /* TOMBOL MENU */
+        .menu-btn {
+            font-family:'Baloo 2', cursive;
+            padding: 16px 46px;
+            font-size: 22px;
+            font-weight: bold;
+
+            background-color: #000000;
+            color: #ffffff;
+
+            border: 4px solid #72df5c;
+            border-radius: 14px;
+
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background-color: #b6e83a;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN AWAL -->
+    <section id="landing-page">
+
+        <div class="content-wrapper">
+
+            <!-- GAMBAR DI DALAM WALLPAPER -->
+            <img src="pict/judul1.png" alt="Ilustrasi Bamboo" class="hero-image">
+
+            <!-- MENU -->
+            <div id="menu-container">
+                <button class="menu-btn" onclick="goTo('menumateri4.html')">MATERI</button>
+                <button class="menu-btn" onclick="goTo('menugame4.html')">GAME</button>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        function goTo(page) {
+            window.location.href = page;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Materi Bangun Ruang - Bamboo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    background:url('pict/materi.png') no-repeat center center;
+    background-size:cover;
+    font-family:'Baloo 2', cursive;
+    overflow:hidden;
+}
+
+/* WRAPPER */
+.materi-wrapper{
+    width:90%;
+    max-width:1100px;
+    height:88vh;
+    margin:4vh auto;
+    background:rgba(255,255,255,0.18);
+    border-radius:28px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* JUDUL */
+.materi-header{
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:30px; /* kasih jarak ke bawah */
+    color:#ffffff;
+    text-shadow:
+        -2px -2px 0 #000000,
+         2px -2px 0 #000000,
+        -2px  2px 0 #000000,
+         2px  2px 0 #000000;
+}
+
+/* CONTENT (TIDAK DIUBAH STRUKTURNYA) */
+.materi-content{
+    flex:1;
+    display:flex;
+    gap:50px;
+    align-items:flex-start;
+    margin-top:30px; /* 🔥 turun ke tengah */
+}
+
+/* TEXT (SCROLL AKTIF LAGI) */
+.materi-text{
+    flex:1;
+    background:#6afb82c8;
+    padding:28px;
+    border-radius:22px;
+    max-height:320px;     /* 🔥 SCROLL SEPERTI GAMBAR KE-2 */
+    overflow-y:auto;
+}
+
+/* IMAGE */
+.materi-image{
+    flex:0.9;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:80px; 
+}
+
+.materi-image img{
+    position:absolute;
+    margin-top:80px; 
+    width:260px;
+    opacity:0;
+    transition:opacity 2s ease;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .materi-content{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .materi-image{
+        height:260px;
+    }
+
+    .materi-text{
+        max-height:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="materi-wrapper">
+
+    <!-- JUDUL -->
+    <div class="materi-header">
+        Simaklah dengan baik
+    </div>
+
+    <!-- CONTENT -->
+    <div class="materi-content">
+
+        <!-- TEXT (TIDAK LOOPING) -->
+        <div class="materi-text">
+            <h1>Pengertian</h1>
+            <p>
+                Pola adalah susunan yang teratur dan berulang.
+                Pola dapat ditemukan dalam bentuk gambar maupun bilangan.
+                Dengan mempelajari pola, kita dapat memprediksi gambar atau bilangan berikutnya dengan cara melihat keteraturannya.
+                <br><b>Pola gambar </b>adalah susunan gambar yang tersusun secara teratur dan memiliki aturan tertentu, bisa dengan pengulangan bentuk, pengulangan warna, perubahan ukuran, atau perubahan posisi.
+                <br>Sedangkan <b>Pola bilangan </b>adalah susunan bilangan yang memiliki aturan tertentu, baik dari penjumlahan, pengurangan, perkalian, atau pembagian dengan bilangan yang sama.
+                
+                
+                <br><br>
+                <h1>Jenis Jenis Pola Gambar</h1>
+                <br>1. Pola Gambar Berulang : Pola ini terjadi ketika gambar yang sama muncul kembali secara teratur.
+                <br><b>Contoh : ● ▲ ● ▲ ● ▲ </b>
+                <br>2. Pola Gambar Bertambah : Pola ini menunjukkan jumlah gambar yang semakin bertambah secara teratur.
+                <br><b>Contoh : ● ●● ●●● </b>
+                <br>3. Pola Gambar Berkurang : Pola ini menunjukkan jumlah gambar yang semakin berkurang.
+                <br><b>Contoh : ★★★★, ★★★, ★★</b>
+
+                <br><br>
+                <h1>Jenis Jenis Pola Bilangan</h1>
+                <br>1. Pola Bilangan Bertambah : Pola bilangan bertambah adalah pola yang nilainya semakin besar dengan aturan tertentu.
+                <br><b>Contoh: 2, 4, 6, 8, ...</b> Setiap bilangan bertambah 2, sehingga ini disebut pola tambah 2
+                <br>2. Pola Bilangan Berkurang : Pola bilangan berkurang adalah pola yang nilainya semakin kecil.
+                <br><b>Contoh: 20, 17, 14, 11, ... </b> Yang dimana setiap bilangan dikurang dengan 3.
+                <br>3. Pola Bilangan Perkalian : Pola bilangan ini terbentuk dengan mengalikan bilangan sebelumnya.
+                <br><b>Contoh: 1, 2, 4, 8, ...</b>Yang dimana setiap bilangan dikali 2
+
+            </p>
+        </div>
+
+        <!-- IMAGE (LOOPING SAJA) -->
+        <div class="materi-image" id="imageBox"></div>
+
+    </div>
+
+</div>
+
+<script>
+/* 🔥 GAMBAR SAJA YANG LOOPING */
+const images = [
+    "pict/gpolab.png",
+    "pict/gpolag.png",
+    "pict/gpola1.png",
+    "pict/gpola2.png",
+    "pict/gpola3.png"
+];
+
+const imageBox = document.getElementById("imageBox");
+let imgIndex = 0;
+
+/* BUAT IMG ELEMENT */
+images.forEach((src, i)=>{
+    const img = document.createElement("img");
+    img.src = src;
+    if(i === 0) img.style.opacity = 1;
+    imageBox.appendChild(img);
+});
+
+const imgEls = imageBox.querySelectorAll("img");
+
+/* LOOPING GAMBAR */
+setInterval(()=>{
+    imgEls[imgIndex].style.opacity = 0;
+    imgIndex = (imgIndex + 1) % imgEls.length;
+    imgEls[imgIndex].style.opacity = 1;
+}, 4000); /* bebas, 4 detik smooth */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Materi Bangun Ruang - Bamboo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    background:url('pict/materi.png') no-repeat center center;
+    background-size:cover;
+    font-family:'Baloo 2', cursive;
+    overflow:hidden;
+}
+
+/* WRAPPER */
+.materi-wrapper{
+    width:90%;
+    max-width:1100px;
+    height:88vh;
+    margin:4vh auto;
+    background:rgba(255,255,255,0.18);
+    border-radius:28px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* JUDUL */
+.materi-header{
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:30px; /* kasih jarak ke bawah */
+    color:#fcfcfc;
+    text-shadow:
+        -2px -2px 0 #000000,
+         2px -2px 0 #000000,
+        -2px  2px 0 #000000,
+         2px  2px 0 #000000;
+}
+
+/* CONTENT (TIDAK DIUBAH STRUKTURNYA) */
+.materi-content{
+    flex:1;
+    display:flex;
+    gap:50px;
+    align-items:flex-start;
+    margin-top:30px; /* 🔥 turun ke tengah */
+}
+
+/* TEXT (SCROLL AKTIF LAGI) */
+.materi-text{
+    flex:1;
+    background:#6afb82c8;
+    padding:28px;
+    border-radius:22px;
+    max-height:320px;     /* 🔥 SCROLL SEPERTI GAMBAR KE-2 */
+    overflow-y:auto;
+}
+
+/* IMAGE */
+.materi-image{
+    flex:0.9;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:80px; 
+}
+
+.materi-image img{
+    position:absolute;
+    margin-top:80px; 
+    width:260px;
+    opacity:0;
+    transition:opacity 2s ease;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .materi-content{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .materi-image{
+        height:260px;
+    }
+
+    .materi-text{
+        max-height:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="materi-wrapper">
+
+    <!-- JUDUL -->
+    <div class="materi-header">
+        Simaklah dengan baik
+    </div>
+
+    <!-- CONTENT -->
+    <div class="materi-content">
+
+        <!-- TEXT (TIDAK LOOPING) -->
+        <div class="materi-text">
+            <h1>Pengertian</h1>
+            <p>
+                Bangun datar adalah bangun berbentuk dua dimensi yang hanya memiliki panjang dan lebar, tetapi tidak memiliki tinggi atau ketebalan.
+                Bangun datar dapat digambar di kertas datar dan sering kita temui dalam kehidupan sehari-hari.
+                <b>Contoh bangun datar yang kita lihat dalam kehidupan sehari-hari</b> mulai dari Buku tulis berbentuk persegi panjang; Ubin lantai berbentuk persegi; Rambu lalu lintas berbentuk segitiga; dan Jam dinding berbentuk lingkaran.
+                <br><br>
+
+                <h1>Ciri-ciri Bangun Datar </h1>
+                <ul>
+                    <li>Memiliki sisi</li>
+                    <li>Memiliki sudut (kecuali lingkaran)</li>
+                    <li>Tidak memiliki volume</li>
+                    <li>Dapat dihitung keliling dan luasnya</li>
+                </ul>
+                <br><br>
+                
+                <h1>Jenis Jenis Bangun Datar</h1>
+                <b>1. Persegi : </b>Persegi adalah bangun datar yang memiliki empat sisi sama panjang dan empat sudut siku-siku. <b>Ciri-ciri bangun persegi yaitu: </b> Memiliki 4 sisi sama panjang, Memiliki 4 sudut siku-siku, Memiliki 4 titik sudut. Untuk menghitung persegi, kita bisa menggunakan rumus: <b>Keliling persegi = 4 × sisi</b> dan juga <b> Luas persegi = sisi × sisi </b>.
+                <br><br>
+                <b>2. Persegi Panjang : </b>Persegi panjang adalah bangun datar yang memiliki dua pasang sisi yang sama panjang dan empat sudut siku-siku. <b>Ciri-ciri bangun persegi panjang yaitu: </b>Sisi panjang berhadapan sama panjang, Sisi lebar berhadapan sama panjang, Memiliki 4 sudut siku-siku. Kemudian untuk menghitung persegi panjang kita bisa menggunakan rumus <b>Keliling persegi panjang = 2 × (panjang + lebar)</b>, dan juga <b>Luas persegi panjang = panjang × lebar</b>.
+                <br><br>
+                <b>3. Segitiga : </b>Segitiga adalah bangun datar yang memiliki tiga sisi dan tiga sudut. Segitiga terbentuk dari tiga garis lurus yang saling bertemu dan membentuk sudut. <b>Ciri-ciri bangun segitiga yaitu: </b>Memiliki 3 sisi, Memiliki 3 sudut, Jumlah seluruh sudut segitiga adalah 180°. Untuk menghitung segitiga, kita dapat menggunakan rumus <b>Keliling segitiga = sisi 1 + sisi 2 + sisi 3</b>, dan untuk luasnya menggunakan rumus <b>Luas segitiga = ½ × alas × tinggi</b>.
+                <br><br>
+                <b>4. Jajar Genjang : </b>Jajar genjang adalah bangun datar yang memiliki dua pasang sisi berhadapan yang sama panjang dan sejajar. Bentuk jajar genjang mirip dengan persegi panjang, tetapi sudut-sudutnya tidak siku-siku. <b>Ciri-ciri bangun jajar genjang yaitu: </b>Sisi yang berhadapan sama panjang, Sisi yang berhadapan sejajar, Sudut yang berhadapan sama besar. Untuk menghitung jajar genjang, kita dapat menggunakan rumus <b>Keliling jajar genjang = 2 × (alas + sisi miring)</b>, dan untuk luasnya menggunakan rumus <b>Luas jajar genjang = alas × tinggi</b>.
+                <br><br>
+                <b>5. Belah Ketupat : </b>Belah ketupat adalah bangun datar yang memiliki empat sisi sama panjang, tetapi sudut-sudutnya tidak berbentuk siku-siku. Belah ketupat memiliki dua diagonal yang saling berpotongan. <b>Ciri-ciri bangun belah ketupat yaitu: </b>Keempat sisinya sama panjang, Sudut yang berhadapan sama besar, Memiliki dua diagonal yang saling berpotongan. Untuk menghitung belah ketupat, kita dapat menggunakan rumus <b>Keliling belah ketupat = 4 × sisi</b>, dan untuk luasnya menggunakan rumus <b>Luas belah ketupat = ½ × diagonal 1 × diagonal 2</b>.
+                <br><br>
+                <b>6. Lingkaran : </b>Lingkaran adalah bangun datar yang tidak memiliki sudut dan sisi, tetapi memiliki satu titik pusat. Semua titik pada lingkaran memiliki jarak yang sama ke titik pusat tersebut. <b>Ciri-ciri bangun lingkaran yaitu: </b>Tidak memiliki sudut, Tidak memiliki sisi, Memiliki titik pusat, Memiliki jari-jari dan diameter. Untuk menghitung lingkaran, kita dapat menggunakan rumus <b>Keliling lingkaran = 2 × π × r</b>, dan untuk luasnya menggunakan rumus <b>Luas lingkaran = π × r × r</b>, dengan nilai π biasanya menggunakan 3,14 atau 22/7.
+            </p>
+        </div>
+
+        <!-- IMAGE (LOOPING SAJA) -->
+        <div class="materi-image" id="imageBox"></div>
+
+    </div>
+
+</div>
+
+<script>
+/* 🔥 GAMBAR SAJA YANG LOOPING */
+const images = [
+    "pict/gdatar.png",
+    "pict/gpersegi.png",
+    "pict/gperjang.png",
+    "pict/gsegi.png",
+    "pict/gtrape.png",
+    "pict/gjajar.png",
+    "pict/gbetupat.png",
+    "pict/gbulat.png",
+    "pict/gruang.png",
+    "pict/kubus.png",
+    "pict/balok.png",
+    "pict/limas.png",
+    "pict/bola.png",
+    "pict/tabung.png",
+    "pict/prisma.png"
+];
+
+const imageBox = document.getElementById("imageBox");
+let imgIndex = 0;
+
+/* BUAT IMG ELEMENT */
+images.forEach((src, i)=>{
+    const img = document.createElement("img");
+    img.src = src;
+    if(i === 0) img.style.opacity = 1;
+    imageBox.appendChild(img);
+});
+
+const imgEls = imageBox.querySelectorAll("img");
+
+/* LOOPING GAMBAR */
+setInterval(()=>{
+    imgEls[imgIndex].style.opacity = 0;
+    imgIndex = (imgIndex + 1) % imgEls.length;
+    imgEls[imgIndex].style.opacity = 1;
+}, 4000); /* bebas, 4 detik smooth */
+</script>
+
+</body>
+</html>

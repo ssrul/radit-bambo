@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Materi Bangun Ruang - Bamboo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    background:url('pict/materi.png') no-repeat center center;
+    background-size:cover;
+    font-family:'Baloo 2', cursive;
+    overflow:hidden;
+}
+
+/* WRAPPER */
+.materi-wrapper{
+    width:90%;
+    max-width:1100px;
+    height:88vh;
+    margin:4vh auto;
+    background:rgba(255,255,255,0.18);
+    border-radius:28px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* JUDUL */
+.materi-header{
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:30px; /* kasih jarak ke bawah */
+    color:#ffffff;
+    text-shadow:
+        -2px -2px 0 #000000,
+         2px -2px 0 #000000,
+        -2px  2px 0 #000000,
+         2px  2px 0 #000000;
+}
+
+/* CONTENT (TIDAK DIUBAH STRUKTURNYA) */
+.materi-content{
+    flex:1;
+    display:flex;
+    gap:50px;
+    align-items:flex-start;
+    margin-top:30px; /* 🔥 turun ke tengah */
+}
+
+/* TEXT (SCROLL AKTIF LAGI) */
+.materi-text{
+    flex:1;
+    background:#6afb82c8;
+    padding:28px;
+    border-radius:22px;
+    max-height:320px;     /* 🔥 SCROLL SEPERTI GAMBAR KE-2 */
+    overflow-y:auto;
+}
+
+/* IMAGE */
+.materi-image{
+    flex:0.9;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:80px; 
+}
+
+.materi-image img{
+    position:absolute;
+    margin-top:80px; 
+    width:260px;
+    opacity:0;
+    transition:opacity 2s ease;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .materi-content{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .materi-image{
+        height:260px;
+    }
+
+    .materi-text{
+        max-height:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="materi-wrapper">
+
+    <!-- JUDUL -->
+    <div class="materi-header">
+        Simaklah dengan baik
+    </div>
+
+    <!-- CONTENT -->
+    <div class="materi-content">
+
+        <!-- TEXT (TIDAK LOOPING) -->
+        <div class="materi-text">
+            <h1>Pengertian</h1>
+            <p>
+                Piktogram dan diagram batang adalah cara menyajikan data agar data lebih mudah dibaca, dipahami, dan dibandingkan. Data biasanya berupa jumlah benda, jumlah orang, atau hasil pengamatan tertentu. <b>Piktogram adalah</b> penyajian data menggunakan gambar atau simbol.
+                Setiap gambar pada piktogram mewakili sejumlah data tertentu, sesuai dengan keterangan yang diberikan. Piktogram sering digunakan karena menarik untuk dilihat, mudah dipahami oleh siswa, dan cocok untuk data sederhana. 
+                Sedangkan <b>Diagram batang adalah</b> penyajian data menggunakan batang-batang persegi panjang yang dimana panjang atau tinggi batang diagram menunjukkan jumlah data tersebut.
+                Diagram batang biasanya digunakan untuk, membandingkan jumlah data, menunjukkan perbedaan nilai antar kategori, dan menyajikan data dengan lebih rapi dan terstruktur
+                <br><br>
+
+                <h1>Ciri-ciri Piktogram</h1>
+                <ul>
+                    <li>Menggunakan gambar atau simbol</li>
+                    <li>Setiap gambar memiliki arti atau nilai tertentu</li>
+                    <li>Dilengkapi keterangan nilai gambar</li>
+                    <li>Data disajikan secara sederhana dan jelas</li>
+                </ul>
+                <br><br>
+
+                <h1>Cara Membaca Piktogram</h1>
+                <ul>
+                    <li>Perhatikan judul piktogram</li>
+                    <li>Perhatikan keterangan nilai gambar (misalnya 1 gambar = 2 siswa)</li>
+                    <li>Hitung jumlah gambar</li>
+                    <li>Kalikan jumlah gambar dengan nilai yang diwakili</li>
+                </ul>
+                <br><br>
+
+                <h1>Ciri-ciri Diagram Batang</h1>
+                <ul>
+                    <li>Menggunakan batang berbentuk persegi panjang</li>
+                    <li>Memiliki sumbu mendatar dan sumbu tegak</li>
+                    <li>Tinggi batang menunjukkan banyaknya data</li>
+                    <li>Setiap batang mewakili satu kategori data</li>
+                </ul>
+                <br><br>
+
+                <h1>Cara Membaca Diagram Batang</h1>
+                <ul>
+                    <li>Perhatikan judul diagram</li>
+                    <li>Perhatikan keterangan pada sumbu mendatar (kategori data)</li>
+                    <li>Perhatikan angka pada sumbu tegak (jumlah data)</li>
+                    <li>Lihat tinggi batang untuk mengetahui banyaknya data</li>
+                </ul>
+                <br><br>
+                
+            </p>
+        </div>
+
+        <!-- IMAGE (LOOPING SAJA) -->
+        <div class="materi-image" id="imageBox"></div>
+
+    </div>
+
+</div>
+
+<script>
+/* 🔥 GAMBAR SAJA YANG LOOPING */
+const images = [
+    "pict/gpikto.png",
+    "pict/gbatang.png",
+    "pict/ggaris.png",
+    "pict/glingkaran.png"
+];
+
+const imageBox = document.getElementById("imageBox");
+let imgIndex = 0;
+
+/* BUAT IMG ELEMENT */
+images.forEach((src, i)=>{
+    const img = document.createElement("img");
+    img.src = src;
+    if(i === 0) img.style.opacity = 1;
+    imageBox.appendChild(img);
+});
+
+const imgEls = imageBox.querySelectorAll("img");
+
+/* LOOPING GAMBAR */
+setInterval(()=>{
+    imgEls[imgIndex].style.opacity = 0;
+    imgIndex = (imgIndex + 1) % imgEls.length;
+    imgEls[imgIndex].style.opacity = 1;
+}, 4000); /* bebas, 4 detik smooth */
+</script>
+
+</body>
+</html>
